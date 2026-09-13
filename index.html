@@ -1,401 +1,448 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barkhad — Apps & Tools</title>
-  <meta name="description" content="Free apps and tools built for everyday use. No ads, no nonsense.">
-  <style>
-    :root {
-      --bg: #0f1117;
-      --card: #161a22;
-      --border: #232836;
-      --text: #e8eaed;
-      --muted: #8b93a7;
-      --accent: #e94560;
-      --accent-hover: #c73e54;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Barkhad — Free Apps &amp; Tools for Everyday Use</title>
+<meta name="description" content="A small collection of free apps and tools built by Barkhad. No ads, no tracking, no nonsense — just useful software.">
+<link rel="canonical" href="https://barkhad.top/">
+<meta name="theme-color" content="#0f1117">
+
+<!-- Social preview -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Barkhad">
+<meta property="og:title" content="Barkhad — Free Apps &amp; Tools">
+<meta property="og:description" content="Free apps and tools built for everyday use. No ads, no nonsense.">
+<meta property="og:url" content="https://barkhad.top/">
+<meta property="og:image" content="https://barkhad.top/assets/images/og-preview.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Favicon (inline SVG, no extra file needed) -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f1117'/%3E%3Ctext x='16' y='23' font-size='20' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23e94560'%3EB%3C/text%3E%3C/svg%3E">
+
+<style>
+  :root {
+    --bg: #0f1117;
+    --card: #161a22;
+    --border: #232836;
+    --text: #e8eaed;
+    --muted: #8b93a7;
+    --accent: #e94560;
+    --accent-hover: #c73e54;
+    --radius: 14px;
+    --maxw: 960px;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .container {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  a { color: inherit; }
+
+  /* Visible keyboard focus everywhere */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: 8px;
+    top: -100px;
+    z-index: 200;
+    background: var(--accent);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: top .2s;
+  }
+  .skip-link:focus { top: 8px; }
+
+  /* ── Navigation ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15, 17, 23, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    height: 56px;
+  }
+
+  .nav-logo {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links { display: flex; gap: 24px; }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── Hero ── */
+  header {
+    padding: 100px 0 80px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    background: radial-gradient(ellipse at 50% 0%, rgba(233, 69, 96, 0.08) 0%, transparent 70%);
+  }
+
+  header h1 {
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+  header h1 span { color: var(--accent); }
+
+  header p {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 28px;
+  }
+  .hero-btns .btn { padding: 12px 24px; font-size: 15px; }
+
+  /* ── Stats ── */
+  .stats {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* ── Sections ── */
+  section { padding: 60px 0; }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+
+  /* ── Featured app ── */
+  .featured-app {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  .featured-image {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 280px;
+    background: #0a0c10;
+    overflow: hidden;
+  }
+
+  .featured-image img {
+    grid-area: 1 / 1;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .featured-image .img-fallback { grid-area: 1 / 1; font-size: 64px; }
+
+  .featured-content {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .featured-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    background: rgba(233, 69, 96, 0.12);
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+
+  .featured-content h2 { font-size: 28px; margin-bottom: 10px; }
+
+  .featured-content p {
+    color: var(--muted);
+    margin-bottom: 24px;
+    font-size: 15px;
+  }
+
+  /* ── App grid ── */
+  .apps {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .app-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    animation: fadeInUp 0.5s ease forwards;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+
+  .app-card:nth-child(1) { animation-delay: 0.05s; }
+  .app-card:nth-child(2) { animation-delay: 0.15s; }
+  .app-card:nth-child(3) { animation-delay: 0.25s; }
+  .app-card:nth-child(4) { animation-delay: 0.35s; }
+
+  .app-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  .app-image {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 10;
+    background: #0a0c10;
+    overflow: hidden;
+  }
+
+  /* Sits behind the image; visible only if the image fails to load */
+  .img-fallback {
+    grid-area: 1 / 1;
+    font-size: 44px;
+    opacity: 0.5;
+    user-select: none;
+  }
+
+  .app-image img {
+    grid-area: 1 / 1;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .app-card:hover .app-image img { transform: scale(1.05); }
+
+  .app-content {
+    padding: 20px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .app-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), #6a5acd);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+
+  .app-icon img { width: 100%; height: 100%; object-fit: cover; }
+
+  .app-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+
+  .app-card p {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 20px;
+    flex-grow: 1;
+  }
+
+  .app-meta {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  /* ── Buttons ── */
+  .btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    transition: background 0.2s;
+  }
+  .btn:hover { background: var(--accent-hover); }
+
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .btn-outline:hover { background: var(--card); border-color: var(--accent); }
+
+  .btn-row { display: flex; gap: 10px; }
+  .btn-row .btn { flex: 1; }
+
+  /* ── About ── */
+  #about p {
+    color: var(--muted);
+    max-width: 640px;
+    font-size: 15px;
+  }
+  #about p + p { margin-top: 12px; }
+
+  /* ── Footer ── */
+  footer {
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--text); }
+  footer .foot-links {
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 700px) {
+    .featured-app { grid-template-columns: 1fr; }
+    .featured-image { min-height: 200px; }
+    .featured-content { padding: 28px; }
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 60px 0 40px; }
+    header h1 { font-size: 32px; }
+    .apps { grid-template-columns: 1fr; }
+    .stats-grid { gap: 12px; }
+    .stat-number { font-size: 24px; }
+    .stat-label { font-size: 11px; letter-spacing: .5px; }
+    .hero-btns { flex-direction: column; align-items: center; }
+    .hero-btns .btn { width: 100%; max-width: 280px; }
+  }
+
+  @media (max-width: 520px) {
+    .nav-links { gap: 16px; }
+    .nav-links a { font-size: 13px; }
+  }
+
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
     }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    /* ── Navigation ── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(15, 17, 23, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 56px;
-    }
-
-    .nav-logo {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text);
-      text-decoration: none;
-    }
-
-    .nav-logo span { color: var(--accent); }
-
-    .nav-links {
-      display: flex;
-      gap: 24px;
-    }
-
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 14px;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: var(--text); }
-
-    /* ── Hero ── */
-    header {
-      padding: 100px 0 80px;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-      background: radial-gradient(ellipse at 50% 0%, rgba(233, 69, 96, 0.08) 0%, transparent 70%);
-    }
-
-    header h1 {
-      font-size: 42px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      margin-bottom: 12px;
-    }
-
-    header h1 span { color: var(--accent); }
-
-    header p {
-      font-size: 17px;
-      color: var(--muted);
-      max-width: 480px;
-      margin: 0 auto;
-    }
-
-    .hero-btns {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      margin-top: 28px;
-    }
-
-    .hero-btns .btn {
-      padding: 12px 24px;
-      font-size: 15px;
-    }
-
-    /* ── Stats ── */
-    .stats {
-      padding: 40px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      text-align: center;
-    }
-
-    .stat-number {
-      font-size: 32px;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 4px;
-    }
-
-    .stat-label {
-      font-size: 13px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    /* ── Sections ── */
-    section { padding: 60px 0; }
-
-    .section-title {
-      font-size: 13px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--muted);
-      margin-bottom: 28px;
-    }
-
-    /* ── Featured app ── */
-    .featured-app {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      margin-bottom: 40px;
-    }
-
-    .featured-image {
-      height: 100%;
-      min-height: 280px;
-      background: #0a0c10;
-    }
-
-    .featured-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .featured-content {
-      padding: 40px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .featured-badge {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--accent);
-      background: rgba(233, 69, 96, 0.12);
-      padding: 4px 10px;
-      border-radius: 20px;
-      margin-bottom: 16px;
-      align-self: flex-start;
-    }
-
-    .featured-content h2 {
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
-
-    .featured-content p {
-      color: var(--muted);
-      margin-bottom: 24px;
-      font-size: 15px;
-    }
-
-    /* ── App grid ── */
-    .apps {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    .app-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
-      animation: fadeInUp 0.5s ease forwards;
-      opacity: 0;
-    }
-
-    .app-card:nth-child(1) { animation-delay: 0.05s; }
-    .app-card:nth-child(2) { animation-delay: 0.15s; }
-    .app-card:nth-child(3) { animation-delay: 0.25s; }
-    .app-card:nth-child(4) { animation-delay: 0.35s; }
-
-    .app-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-    }
-
-    .app-image {
-      width: 100%;
-      height: 180px;
-      overflow: hidden;
-      background: #0a0c10;
-    }
-
-    .app-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.4s ease;
-    }
-
-    .app-card:hover .app-image img {
-      transform: scale(1.05);
-    }
-
-    .app-content {
-      padding: 20px 24px 24px;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
-
-    .app-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent), #6a5acd);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      margin-bottom: 16px;
-      overflow: hidden;
-    }
-
-    .app-icon img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .app-card h3 {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
-
-    .app-card p {
-      font-size: 14px;
-      color: var(--muted);
-      margin-bottom: 20px;
-      flex-grow: 1;
-    }
-
-    .app-meta {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 14px;
-    }
-
-    .app-meta span { margin-right: 12px; }
-
-    /* ── Fallback for missing images ── */
-    .fallback {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      font-size: 48px;
-      background: #0a0c10;
-    }
-
-    /* ── Buttons ── */
-    .btn {
-      display: inline-block;
-      background: var(--accent);
-      color: #fff;
-      padding: 10px 18px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 600;
-      text-align: center;
-      transition: background 0.2s;
-    }
-
-    .btn:hover { background: var(--accent-hover); }
-
-    .btn-outline {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text);
-    }
-
-    .btn-outline:hover {
-      background: var(--card);
-      border-color: var(--accent);
-    }
-
-    .btn-row { display: flex; gap: 10px; }
-    .btn-row .btn { flex: 1; }
-
-    /* ── About ── */
-    #about p {
-      color: var(--muted);
-      max-width: 640px;
-      font-size: 15px;
-    }
-
-    /* ── Footer ── */
-    footer {
-      padding: 40px 0;
-      border-top: 1px solid var(--border);
-      text-align: center;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    footer a { color: var(--muted); text-decoration: none; }
-    footer a:hover { color: var(--text); }
-
-    /* ── Animations ── */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 700px) {
-      .featured-app {
-        grid-template-columns: 1fr;
-      }
-      .featured-image {
-        min-height: 200px;
-      }
-      .featured-content {
-        padding: 28px;
-      }
-    }
-
-    @media (max-width: 600px) {
-      header { padding: 60px 0 40px; }
-      header h1 { font-size: 32px; }
-      .apps { grid-template-columns: 1fr; }
-      .stats-grid { gap: 12px; }
-      .stat-number { font-size: 24px; }
-      .hero-btns { flex-direction: column; align-items: center; }
-      .hero-btns .btn { width: 100%; max-width: 280px; }
-    }
-  </style>
+    .app-card { animation: none; opacity: 1; }
+    .app-card:hover { transform: none; }
+    .app-card:hover .app-image img { transform: none; }
+  }
+</style>
 </head>
 <body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- Navigation -->
   <nav>
@@ -409,166 +456,186 @@
     </div>
   </nav>
 
-  <!-- Hero -->
-  <header>
-    <div class="container">
-      <h1>Barkhad<span>.</span></h1>
-      <p>Free apps and tools — built for everyday use. No ads, no nonsense.</p>
-      <div class="hero-btns">
-        <a href="#apps" class="btn">Browse Apps</a>
-        <a href="#about" class="btn btn-outline">Learn More</a>
-      </div>
-    </div>
-  </header>
+  <main id="main">
 
-  <!-- Stats -->
-  <section class="stats">
-    <div class="container stats-grid">
-      <div class="stat">
-        <div class="stat-number">4+</div>
-        <div class="stat-label">Apps Available</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number">100%</div>
-        <div class="stat-label">Free Forever</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number">0</div>
-        <div class="stat-label">Ads</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Apps -->
-  <section id="apps">
-    <div class="container">
-      <div class="section-title">Apps</div>
-
-      <!-- ═══════════════════════════════════════════════════════ -->
-      <!-- FEATURED APP: SHARCI                                    -->
-      <!-- ═══════════════════════════════════════════════════════ -->
-      <div class="featured-app">
-        <div class="featured-image">
-          <!-- ▼▼▼ PUT THE SHARCI SCREENSHOT HERE ▼▼▼
-               Upload your image to: assets/images/sharci-screenshot.png
-               Then make sure the src below matches that exact filename.
-               If the file is missing, the ✏️ emoji will show instead. -->
-          <img src="Assets/images/sharci1.png"
-               alt="Sharci drawing app screenshot"
-               onerror="this.parentElement.innerHTML='<div class=&quot;fallback&quot;>✏️</div>'">
-          <!-- ▲▲▲ END SHARCI SCREENSHOT ▲▲▲ -->
-        </div>
-        <div class="featured-content">
-          <span class="featured-badge">Featured</span>
-          <h2>Sharci</h2>
-          <p>A simple, fast drawing app. Sketch, doodle, and export your work.</p>
-          <a href="Assets/apks/sharci.apk" class="btn">Download Now</a>
+    <!-- Hero -->
+    <header>
+      <div class="container">
+        <h1>Barkhad<span>.</span></h1>
+        <p>Free apps and tools — built for everyday use. No ads, no nonsense.</p>
+        <div class="hero-btns">
+          <a href="#apps" class="btn">Browse Apps</a>
+          <a href="#about" class="btn btn-outline">Learn More</a>
         </div>
       </div>
+    </header>
 
-      <!-- App grid -->
-      <div class="apps">
+    <!-- Stats -->
+    <section class="stats" aria-label="Key facts">
+      <div class="container stats-grid">
+        <div class="stat">
+          <div class="stat-number">4+</div>
+          <div class="stat-label">Apps Available</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Free Forever</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">0</div>
+          <div class="stat-label">Ads</div>
+        </div>
+      </div>
+    </section>
 
-        <!-- ═══════════════════════════════════════════════════ -->
-        <!-- APP 1: VIDEO CUTTER                                 -->
-        <!-- ═══════════════════════════════════════════════════ -->
-        <div class="app-card">
-          <div class="app-image">
-            <!-- ▼▼▼ PUT THE VIDEO CUTTER PICTURE HERE ▼▼▼
-                 Upload your image to: assets/images/video-cutter.png
-                 (or reuse the existing Tv.png by changing the src
-                 to "assets/images/Tv.png"). -->
-            <img src="Assets/images/video.png"
-                 alt="Video Cutter preview"
-                 onerror="this.parentElement.innerHTML='<div class=&quot;fallback&quot;>🎬</div>'">
-            <!-- ▲▲▲ END VIDEO CUTTER PICTURE ▲▲▲ -->
+    <!-- Apps -->
+    <section id="apps">
+      <div class="container">
+        <h2 class="section-title">Apps</h2>
+
+        <!-- ═══════════════════════════════════════════════════════ -->
+        <!-- FEATURED APP: SHARCI                                    -->
+        <!-- Image path: assets/images/sharci1.png                   -->
+        <!-- ═══════════════════════════════════════════════════════ -->
+        <div class="featured-app">
+          <div class="featured-image">
+            <span class="img-fallback" aria-hidden="true">✏️</span>
+            <img src="assets/images/sharci1.png"
+                 alt="Screenshot of the Sharci drawing app"
+                 width="800" height="600"
+                 onerror="this.remove()">
           </div>
-          <div class="app-content">
-            <div class="app-icon">🎬</div>
-            <h3>Video Cutter</h3>
-            <p>Trim and edit videos for TikTok, YouTube, or status stories.</p>
-            <div class="app-meta">
-              <span>v1.0.0</span>
-              <span>8 MB</span>
-            </div>
-            <div class="btn-row">
-              <a href="https://github.com/BCAprogrammer/bcaprogrammer.github.io/releases/download/vid/app-x86_64-release.apk" class="btn">Download</a>
-            </div>
+          <div class="featured-content">
+            <span class="featured-badge">Featured</span>
+            <h2>Sharci</h2>
+            <p>A simple, fast drawing app. Sketch, doodle, and export your work.</p>
+            <a href="assets/apks/sharci.apk" class="btn" download>Download APK</a>
           </div>
         </div>
 
-        <!-- ═══════════════════════════════════════════════════ -->
-        <!-- APP 2: TV PLAYER                                    -->
-        <!-- ═══════════════════════════════════════════════════ -->
-        <div class="app-card">
-          <div class="app-image">
-            <!-- ▼▼▼ PUT THE TV PLAYER PICTURE HERE ▼▼▼
-                 Upload your image to: assets/images/tv-player.png
-                 (or keep using "assets/images/Tv.png"). -->
-            <img src="Assets/images/TV.png"
-                 alt="TV Player preview"
-                 onerror="this.parentElement.innerHTML='<div class=&quot;fallback&quot;>📺</div>'">
-            <!-- ▲▲▲ END TV PLAYER PICTURE ▲▲▲ -->
-          </div>
-          <div class="app-content">
-            <div class="app-icon">📺</div>
-            <h3>TV Player</h3>
-            <p>Watch live TV channels on your phone. Works on any device.</p>
-            <div class="app-meta">
-              <span>v1.0.0</span>
-              <span>Online</span>
-            </div>
-            <div class="btn-row">
-              <a href="/tv/" class="btn">Open</a>
-            </div>
-          </div>
-        </div>
+        <!-- App grid -->
+        <div class="apps">
 
-        <!-- ═══════════════════════════════════════════════════ -->
-        <!-- APP 3: GABAY  ← NEW APP                             -->
-        <!-- ═══════════════════════════════════════════════════ -->
-        <div class="app-card">
-          <div class="app-image">
-            <!-- ▼▼▼ PUT THE GABAY PICTURE HERE ▼▼▼
-                 Upload your image to: assets/images/gabay.png -->
-            <img src="Assets/images/gabay.png"
-                 alt="Gabay poetry app preview"
-                 onerror="this.parentElement.innerHTML='<div class=&quot;fallback&quot;>📜</div>'">
-            <!-- ▲▲▲ END GABAY PICTURE ▲▲▲ -->
-          </div>
-          <div class="app-content">
-            <div class="app-icon">📜</div>
-            <h3>Gabay</h3>
-            <p>A home for Somali poetry — read, write, and share classic and modern gabay.</p>
-            <div class="app-meta">
-              <span>v1.0.0</span>
-              <span>Free</span>
+          <!-- ═══════════════════════════════════════════════════ -->
+          <!-- APP 1: VIDEO CUTTER  —  assets/images/video.png    -->
+          <!-- ═══════════════════════════════════════════════════ -->
+          <article class="app-card">
+            <div class="app-image">
+              <span class="img-fallback" aria-hidden="true">🎬</span>
+              <img src="assets/images/video.png"
+                   alt="Video Cutter app preview"
+                   width="800" height="500" loading="lazy" decoding="async"
+                   onerror="this.remove()">
             </div>
-            <div class="btn-row">
-              <!-- Change the href below to wherever your Gabay app/APK lives -->
-              <a href="https://github.com/BCAprogrammer/bcaprogrammer.github.io/releases/download/gabay_ccod/gabay_cod.apk" class="btn">Download</a>
-            </div>e
-          </div>
-        </div>
+            <div class="app-content">
+              <div class="app-icon" aria-hidden="true">🎬</div>
+              <h3>Video Cutter</h3>
+              <p>Trim and edit videos for TikTok, YouTube, or status stories.</p>
+              <div class="app-meta">
+                <span>v1.0.0</span>
+                <span>8 MB</span>
+                <span>Android</span>
+              </div>
+              <div class="btn-row">
+                <a href="https://github.com/BCAprogrammer/bcaprogrammer.github.io/releases/download/vid/app-x86_64-release.apk"
+                   class="btn" rel="noopener">Download APK</a>
+              </div>
+            </div>
+          </article>
 
+          <!-- ═══════════════════════════════════════════════════ -->
+          <!-- APP 2: TV PLAYER  —  assets/images/tv.png          -->
+          <!-- ═══════════════════════════════════════════════════ -->
+          <article class="app-card">
+            <div class="app-image">
+              <span class="img-fallback" aria-hidden="true">📺</span>
+              <img src="assets/images/tv.png"
+                   alt="TV Player app preview"
+                   width="800" height="500" loading="lazy" decoding="async"
+                   onerror="this.remove()">
+            </div>
+            <div class="app-content">
+              <div class="app-icon" aria-hidden="true">📺</div>
+              <h3>TV Player</h3>
+              <p>Stream live TV channels right in your browser — nothing to install.</p>
+              <div class="app-meta">
+                <span>v1.0.0</span>
+                <span>Web app</span>
+              </div>
+              <div class="btn-row">
+                <a href="/tv/" class="btn">Open Player</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- ═══════════════════════════════════════════════════ -->
+          <!-- APP 3: GABAY  —  assets/images/gabay.png           -->
+          <!-- ═══════════════════════════════════════════════════ -->
+          <article class="app-card">
+            <div class="app-image">
+              <span class="img-fallback" aria-hidden="true">📜</span>
+              <img src="assets/images/gabay.png"
+                   alt="Gabay poetry app preview"
+                   width="800" height="500" loading="lazy" decoding="async"
+                   onerror="this.remove()">
+            </div>
+            <div class="app-content">
+              <div class="app-icon" aria-hidden="true">📜</div>
+              <h3>Gabay</h3>
+              <p>A home for Somali poetry — read, write, and share classic and modern gabay.</p>
+              <div class="app-meta">
+                <span>v1.0.0</span>
+                <span>Free</span>
+                <span>Android</span>
+              </div>
+              <div class="btn-row">
+                <a href="https://github.com/BCAprogrammer/bcaprogrammer.github.io/releases/download/gabay_ccod/gabay_cod.apk"
+                   class="btn" rel="noopener">Download APK</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- About -->
-  <section id="about">
-    <div class="container">
-      <div class="section-title">About</div>
-      <p>this the personal collection of free apps and tools made by barkhad.</p>
-    </div>
-  </section>
+    <!-- About -->
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title">About</h2>
+        <p>This is a personal collection of free apps and tools made by Barkhad.</p>
+        <p>Everything here is free to use, with no ads and no tracking. If you find a bug or have an idea, get in touch.</p>
+      </div>
+    </section>
+
+  </main>
 
   <!-- Footer -->
   <footer>
     <div class="container">
-      <p>© 2026 Barkhad · <a href="mailto:contact@barkhad.top">contact@barkhad.top</a></p>
+      <div class="foot-links">
+        <a href="#apps">Apps</a>
+        <a href="#about">About</a>
+        <a href="mailto:contact@barkhad.top">contact@barkhad.top</a>
+      </div>
+      <p>© 2026 Barkhad. All apps are free, forever.</p>
     </div>
   </footer>
+
+  <!-- Structured data for search engines -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Barkhad",
+    "url": "https://barkhad.top/",
+    "description": "Free apps and tools built for everyday use. No ads, no nonsense.",
+    "author": {
+      "@type": "Person",
+      "name": "Barkhad"
+    }
+  }
+  </script>
 
 </body>
 </html>
