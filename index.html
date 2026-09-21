@@ -64,9 +64,6 @@
   }
   .skip-link:focus { top: 8px; }
 
-  /* ══════════════════════════════════════════════════════
-     CURSOR GLOW
-     ══════════════════════════════════════════════════════ */
   .cursor-glow {
     position: fixed; top: 0; left: 0;
     width: 560px; height: 560px;
@@ -85,9 +82,6 @@
   .cursor-glow.on { opacity: 1; }
   @media (hover: none), (pointer: coarse) { .cursor-glow { display: none; } }
 
-  /* ══════════════════════════════════════════════════════
-     HERO AMBIENT ORBS
-     ══════════════════════════════════════════════════════ */
   .orb-field {
     position: absolute; inset: 0;
     overflow: hidden; pointer-events: none; z-index: 0;
@@ -129,9 +123,6 @@
     75%      { transform: translate(-50px, -20px) scale(1); }
   }
 
-  /* ══════════════════════════════════════════════════════
-     SCROLL REVEAL
-     ══════════════════════════════════════════════════════ */
   .reveal {
     opacity: 0;
     transform: translateY(28px);
@@ -160,9 +151,6 @@
   }
   .section-title.reveal.is-visible { letter-spacing: 1.5px; }
 
-  /* ══════════════════════════════════════════════════════
-     NAV
-     ══════════════════════════════════════════════════════ */
   nav {
     position: sticky; top: 0; z-index: 100;
     background: rgba(15, 17, 23, 0.85);
@@ -212,9 +200,6 @@
   .nav-links a.active { color: var(--text); }
   .nav-links a.active::after { transform: scaleX(1); }
 
-  /* ══════════════════════════════════════════════════════
-     HERO
-     ══════════════════════════════════════════════════════ */
   header {
     position: relative;
     padding: 100px 0 80px;
@@ -225,8 +210,6 @@
     isolation: isolate;
   }
   header > .container { position: relative; z-index: 2; }
-
-  /* ── Hero title — projector-beam reveal ─────────────── */
 
   .hero-title-wrap {
     position: relative;
@@ -332,9 +315,6 @@
   }
   .hero-btns .btn { padding: 12px 24px; font-size: 15px; }
 
-  /* ══════════════════════════════════════════════════════
-     SECTIONS
-     ══════════════════════════════════════════════════════ */
   section { padding: 60px 0; position: relative; }
 
   .section-title {
@@ -343,9 +323,6 @@
     color: var(--muted); margin-bottom: 28px;
   }
 
-  /* ══════════════════════════════════════════════════════
-     BUTTONS — shine sweep
-     ══════════════════════════════════════════════════════ */
   .btn {
     display: inline-block; background: var(--accent); color: #fff;
     padding: 10px 18px; border-radius: 8px;
@@ -382,9 +359,6 @@
   .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
   .btn-row .btn { flex: 1; min-width: 120px; }
 
-  /* ══════════════════════════════════════════════════════
-     FEATURED APP
-     ══════════════════════════════════════════════════════ */
   .featured-app {
     display: grid; grid-template-columns: 1fr 1fr;
     background: var(--card); border: 1px solid var(--border);
@@ -444,9 +418,6 @@
   .featured-content h2 { font-size: 28px; margin-bottom: 10px; }
   .featured-content p { color: var(--muted); margin-bottom: 24px; font-size: 15px; }
 
-  /* ══════════════════════════════════════════════════════
-     APP GRID
-     ══════════════════════════════════════════════════════ */
   .apps {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -522,9 +493,6 @@
     content: "·"; margin-right: 12px; color: var(--border);
   }
 
-  /* ══════════════════════════════════════════════════════
-     FEEDBACK FORM
-     ══════════════════════════════════════════════════════ */
   #feedback {
     background: var(--card);
     border-top: 1px solid var(--border);
@@ -596,9 +564,6 @@
   .feedback-alt a { color: var(--accent); text-decoration: none; }
   .feedback-alt a:hover { text-decoration: underline; }
 
-  /* ══════════════════════════════════════════════════════
-     ABOUT
-     ══════════════════════════════════════════════════════ */
   #about p {
     color: var(--muted);
     max-width: 640px;
@@ -606,9 +571,6 @@
   }
   #about p + p { margin-top: 12px; }
 
-  /* ══════════════════════════════════════════════════════
-     FOOTER
-     ══════════════════════════════════════════════════════ */
   footer {
     padding: 40px 0;
     border-top: 1px solid var(--border);
@@ -624,9 +586,6 @@
     margin-bottom: 14px;
   }
 
-  /* ══════════════════════════════════════════════════════
-     RESPONSIVE
-     ══════════════════════════════════════════════════════ */
   @media (max-width: 700px) {
     .featured-app { grid-template-columns: 1fr; }
     .featured-image { min-height: 200px; }
@@ -649,9 +608,6 @@
     .nav-logo img { width: 24px; height: 24px; }
   }
 
-  /* ══════════════════════════════════════════════════════
-     REDUCED MOTION
-     ══════════════════════════════════════════════════════ */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.001ms !important;
@@ -674,7 +630,6 @@
 
   <div class="cursor-glow" aria-hidden="true"></div>
 
-  <!-- ─── Nav ─── -->
   <nav id="nav">
     <div class="container nav-inner">
       <a href="/" class="nav-logo">
@@ -691,7 +646,6 @@
 
   <main id="main">
 
-    <!-- ─── 1. Hero ─── -->
     <header>
       <div class="orb-field" aria-hidden="true">
         <span class="orb"></span>
@@ -717,7 +671,6 @@
       </div>
     </header>
 
-    <!-- ─── 2. Apps ─── -->
     <section id="apps">
       <div class="container">
         <h2 class="section-title reveal">Apps &amp; Downloads</h2>
@@ -742,6 +695,741 @@
 
           <article class="app-card" style="--i:0">
             <div class="app-image">
+              <span class="img-fallback" aria-hidden="true">CCTV Viewer</span>
+              <img src="Assets/images/cctv-viewer.png"
+                   alt="CCTV Viewer app preview"
+                   width="800" height="500" loading="lazy" decoding="async"
+                   onerror="this.remove()">
+            </div>
+            <div class="app-content">
+              <h3>CCTV Viewer</h3>
+              <p>Watch your CCTV / IP cameras from your phone. RTSP, ONVIF auto-discovery, remote streams — one app.</p>
+              <div class="app-meta">
+                <span>v0.1.0</span>
+                <span>79 MB</span>
+                <span>Android</span>
+              </div>
+              <div class="btn-row">
+                <a href="<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Barkhad — Free Apps &amp; Tools for Everyday Use</title>
+<meta name="description" content="A small collection of free apps and tools built by Barkhad. No ads, no tracking, no nonsense — just useful software.">
+<link rel="canonical" href="https://barkhad.top/">
+<meta name="theme-color" content="#0f1117">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Barkhad">
+<meta property="og:title" content="Barkhad — Free Apps &amp; Tools">
+<meta property="og:description" content="Free apps and tools built for everyday use. No ads, no nonsense.">
+<meta property="og:url" content="https://barkhad.top/">
+<meta property="og:image" content="https://barkhad.top/Assets/images/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="Assets/images/logo.png">
+
+<style>
+  :root {
+    --bg: #0f1117;
+    --card: #161a22;
+    --border: #232836;
+    --text: #e8eaed;
+    --muted: #8b93a7;
+    --accent: #e94560;
+    --accent-hover: #c73e54;
+    --radius: 14px;
+    --maxw: 960px;
+
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --dur-fast: 0.25s;
+    --dur-med: 0.6s;
+    --dur-slow: 0.9s;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  .container { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+  .skip-link {
+    position: absolute; left: 8px; top: -100px; z-index: 200;
+    background: var(--accent); color: #fff; padding: 10px 16px;
+    border-radius: 8px; font-size: 14px; font-weight: 600;
+    text-decoration: none; transition: top .2s;
+  }
+  .skip-link:focus { top: 8px; }
+
+  .cursor-glow {
+    position: fixed; top: 0; left: 0;
+    width: 560px; height: 560px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+                rgba(233, 69, 96, 0.10) 0%,
+                rgba(233, 69, 96, 0.04) 35%,
+                transparent 65%);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 0.5s var(--ease-out);
+    will-change: transform;
+  }
+  .cursor-glow.on { opacity: 1; }
+  @media (hover: none), (pointer: coarse) { .cursor-glow { display: none; } }
+
+  .orb-field {
+    position: absolute; inset: 0;
+    overflow: hidden; pointer-events: none; z-index: 0;
+  }
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(50px);
+    opacity: 0.35;
+    will-change: transform;
+  }
+  .orb:nth-child(1) { width: 180px; height: 180px; top: 10%; left: 8%;
+    background: #e94560; animation: drift1 22s ease-in-out infinite; }
+  .orb:nth-child(2) { width: 140px; height: 140px; top: 60%; left: 78%;
+    background: #6c5ce7; opacity: 0.22; animation: drift2 28s ease-in-out infinite; }
+  .orb:nth-child(3) { width: 220px; height: 220px; top: 30%; left: 55%;
+    background: #e94560; opacity: 0.15; animation: drift3 34s ease-in-out infinite; }
+  .orb:nth-child(4) { width: 100px; height: 100px; top: 75%; left: 20%;
+    background: #f39c12; opacity: 0.12; animation: drift1 26s ease-in-out infinite reverse; }
+  .orb:nth-child(5) { width: 160px; height: 160px; top: 5%; left: 65%;
+    background: #e94560; opacity: 0.18; animation: drift2 30s ease-in-out infinite reverse; }
+  .orb:nth-child(6) { width: 120px; height: 120px; top: 50%; left: 3%;
+    background: #6c5ce7; opacity: 0.20; animation: drift3 24s ease-in-out infinite; }
+  .orb:nth-child(7) { width: 90px;  height: 90px;  top: 85%; left: 50%;
+    background: #e94560; opacity: 0.15; animation: drift1 20s ease-in-out infinite; }
+
+  @keyframes drift1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%      { transform: translate(60px, -40px) scale(1.1); }
+    66%      { transform: translate(-30px, 50px) scale(0.95); }
+  }
+  @keyframes drift2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50%      { transform: translate(-70px, -30px) scale(1.15); }
+  }
+  @keyframes drift3 {
+    0%, 100% { transform: translate(0, 0) scale(0.95); }
+    40%      { transform: translate(40px, 60px) scale(1.05); }
+    75%      { transform: translate(-50px, -20px) scale(1); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity var(--dur-slow) var(--ease-out),
+      transform var(--dur-slow) var(--ease-out);
+  }
+  .reveal.is-visible { opacity: 1; transform: none; }
+
+  .reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.7s var(--ease-out),
+      transform 0.7s var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 90ms);
+  }
+  .reveal-stagger.is-visible > * { opacity: 1; transform: none; }
+
+  .section-title.reveal {
+    letter-spacing: 3px;
+    transition:
+      opacity var(--dur-slow) var(--ease-out),
+      transform var(--dur-slow) var(--ease-out),
+      letter-spacing var(--dur-slow) var(--ease-out);
+  }
+  .section-title.reveal.is-visible { letter-spacing: 1.5px; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15, 17, 23, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    transition: background var(--dur-med) var(--ease-out);
+  }
+  nav.scrolled {
+    background: rgba(15, 17, 23, 0.95);
+  }
+
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; height: 56px;
+  }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 18px; font-weight: 700;
+    letter-spacing: -0.2px; text-decoration: none;
+  }
+  .nav-logo img {
+    width: 28px; height: 28px; object-fit: contain; display: block;
+    transition: transform 0.5s var(--ease-out);
+  }
+  .nav-logo:hover img { transform: rotate(-8deg) scale(1.08); }
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 14px; transition: color 0.2s;
+    position: relative; padding: 6px 0;
+  }
+  .nav-links a::after {
+    content: "";
+    position: absolute; left: 0; right: 0; bottom: -2px;
+    height: 1.5px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-med) var(--ease-out);
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  .nav-links a.active { color: var(--text); }
+  .nav-links a.active::after { transform: scaleX(1); }
+
+  header {
+    position: relative;
+    padding: 100px 0 80px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    background: radial-gradient(ellipse at 50% 0%, rgba(233, 69, 96, 0.08) 0%, transparent 70%);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  header > .container { position: relative; z-index: 2; }
+
+  .hero-title-wrap {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  header h1 {
+    font-size: 42px; font-weight: 700;
+    letter-spacing: -0.5px;
+    margin: 0;
+    position: relative;
+    display: inline-block;
+    clip-path: inset(0 100% 0 0);
+    animation: beam-reveal 0.95s cubic-bezier(0.65, 0, 0.35, 1) 0.15s forwards;
+  }
+
+  @keyframes beam-reveal {
+    0%   { clip-path: inset(0 100% 0 0); }
+    100% { clip-path: inset(0 0 0 0); }
+  }
+
+  .hero-beam {
+    position: absolute;
+    top: -20%; bottom: -20%;
+    left: -25%;
+    width: 70px;
+    background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(233, 69, 96, 0.55) 42%,
+                rgba(255, 210, 220, 0.95) 50%,
+                rgba(233, 69, 96, 0.55) 58%,
+                transparent 100%);
+    filter: blur(5px);
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0;
+    animation: beam-sweep 1.0s cubic-bezier(0.65, 0, 0.35, 1) 0.10s forwards;
+  }
+
+  @keyframes beam-sweep {
+    0%   { opacity: 0; left: -25%; }
+    15%  { opacity: 1; }
+    85%  { opacity: 1; }
+    100% { opacity: 0; left: 110%; }
+  }
+
+  .hero-glow {
+    position: absolute;
+    inset: -30px -50px;
+    background: radial-gradient(ellipse at center,
+                rgba(233, 69, 96, 0.42) 0%,
+                rgba(233, 69, 96, 0.12) 42%,
+                transparent 70%);
+    filter: blur(22px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    animation: glow-flare 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
+  }
+
+  @keyframes glow-flare {
+    0%   { opacity: 0;    transform: scale(0.85); }
+    40%  { opacity: 0.95; transform: scale(1.05); }
+    100% { opacity: 0.28; transform: scale(1); }
+  }
+
+  header h1 span {
+    color: var(--accent);
+    display: inline-block;
+    animation:
+      dot-pop   0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 1.00s both,
+      dot-pulse 2.6s  ease-in-out                       1.60s infinite;
+  }
+
+  @keyframes dot-pop {
+    0%   { transform: scale(0.4);  opacity: 0.3; }
+    65%  { transform: scale(1.30); opacity: 1;   }
+    100% { transform: scale(1);    opacity: 1;   }
+  }
+
+  @keyframes dot-pulse {
+    0%, 100% { transform: translateY(0);    opacity: 1;   }
+    50%      { transform: translateY(-4px); opacity: 0.7; }
+  }
+
+  @keyframes hero-in {
+    to { opacity: 1; transform: none; }
+  }
+
+  header p {
+    font-size: 17px; color: var(--muted);
+    max-width: 520px; margin: 0 auto;
+    opacity: 0; transform: translateY(20px);
+    animation: hero-in 0.9s var(--ease-out) 1.15s forwards;
+  }
+
+  .hero-btns {
+    display: flex; gap: 12px;
+    justify-content: center; margin-top: 28px;
+    opacity: 0; transform: translateY(20px);
+    animation: hero-in 0.9s var(--ease-out) 1.35s forwards;
+  }
+  .hero-btns .btn { padding: 12px 24px; font-size: 15px; }
+
+  section { padding: 60px 0; position: relative; }
+
+  .section-title {
+    font-size: 13px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 1.5px;
+    color: var(--muted); margin-bottom: 28px;
+  }
+
+  .btn {
+    display: inline-block; background: var(--accent); color: #fff;
+    padding: 10px 18px; border-radius: 8px;
+    text-decoration: none; font-size: 14px; font-weight: 600;
+    text-align: center; transition: background 0.2s, transform 0.2s;
+    border: none; cursor: pointer; font-family: inherit;
+    position: relative; overflow: hidden;
+  }
+  .btn::before {
+    content: "";
+    position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(120deg,
+                transparent 0%,
+                rgba(255,255,255,0.22) 50%,
+                transparent 100%);
+    transition: left 0.6s var(--ease-out);
+    pointer-events: none;
+  }
+  .btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+  .btn:hover::before { left: 100%; }
+  .btn:active { transform: translateY(0); }
+
+  .btn-outline {
+    background: transparent; border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .btn-outline::before { background: linear-gradient(120deg,
+                transparent 0%,
+                rgba(233, 69, 96, 0.18) 50%,
+                transparent 100%); }
+  .btn-outline:hover { background: var(--card); border-color: var(--accent); }
+
+  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn-row .btn { flex: 1; min-width: 120px; }
+
+  .featured-app {
+    display: grid; grid-template-columns: 1fr 1fr;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden;
+    margin-bottom: 32px;
+    position: relative;
+    transition: border-color 0.4s var(--ease-out),
+                transform 0.5s var(--ease-out),
+                box-shadow 0.5s var(--ease-out);
+  }
+  .featured-app:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  }
+
+  .featured-image {
+    position: relative; display: grid; place-items: center;
+    min-height: 280px; background: #0a0c10; overflow: hidden;
+  }
+  .featured-image img {
+    grid-area: 1 / 1; position: relative; z-index: 1;
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 0.8s var(--ease-out);
+    will-change: transform;
+  }
+  .featured-image .img-fallback {
+    grid-area: 1 / 1; font-size: 18px; font-weight: 600;
+    color: var(--muted); text-align: center; padding: 20px;
+  }
+
+  .featured-content {
+    padding: 40px; display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+  }
+
+  .featured-badge {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--accent); background: rgba(233, 69, 96, 0.12);
+    padding: 4px 10px; border-radius: 20px; margin-bottom: 16px;
+    position: relative;
+  }
+  .featured-badge::after {
+    content: "";
+    position: absolute; inset: -2px;
+    border-radius: 20px;
+    border: 1px solid rgba(233, 69, 96, 0.35);
+    animation: badge-pulse 2.4s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes badge-pulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50%      { opacity: 0;   transform: scale(1.25); }
+  }
+
+  .featured-content h2 { font-size: 28px; margin-bottom: 10px; }
+  .featured-content p { color: var(--muted); margin-bottom: 24px; font-size: 15px; }
+
+  .apps {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .app-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: border-color 0.3s var(--ease-out),
+                transform 0.4s var(--ease-out),
+                box-shadow 0.4s var(--ease-out);
+    position: relative;
+  }
+  .app-card::after {
+    content: "";
+    position: absolute; top: 0; left: -60%;
+    width: 60%; height: 100%;
+    background: linear-gradient(105deg,
+                transparent 0%,
+                rgba(233, 69, 96, 0.10) 45%,
+                rgba(233, 69, 96, 0.05) 55%,
+                transparent 100%);
+    transform: skewX(-18deg);
+    transition: left 0.85s var(--ease-out);
+    pointer-events: none; z-index: 3;
+  }
+  .app-card:hover::after { left: 130%; }
+
+  .app-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(233, 69, 96, 0.15);
+  }
+
+  .app-image {
+    position: relative; display: grid; place-items: center;
+    aspect-ratio: 16 / 10; background: #0a0c10; overflow: hidden;
+  }
+  .app-image img {
+    grid-area: 1 / 1; position: relative; z-index: 1;
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 0.7s var(--ease-out);
+  }
+  .app-card:hover .app-image img { transform: scale(1.06); }
+
+  .img-fallback {
+    grid-area: 1 / 1; font-size: 16px; font-weight: 600;
+    color: var(--muted); text-align: center; padding: 20px;
+  }
+
+  .app-content {
+    padding: 20px 24px 24px;
+    display: flex; flex-direction: column; flex-grow: 1;
+  }
+
+  .app-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+  .app-card p {
+    font-size: 14px; color: var(--muted);
+    margin-bottom: 20px; flex-grow: 1;
+  }
+
+  .app-meta {
+    font-size: 12px; color: var(--muted);
+    margin-bottom: 14px; display: flex; gap: 12px; flex-wrap: wrap;
+  }
+  .app-meta span {
+    position: relative;
+  }
+  .app-meta span + span::before {
+    content: "·"; margin-right: 12px; color: var(--border);
+  }
+
+  #feedback {
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  #feedback .section-title { margin-bottom: 12px; }
+
+  #feedback h2 {
+    font-size: 26px;
+    margin-bottom: 10px;
+    letter-spacing: -0.3px;
+  }
+
+  #feedback .lead {
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 560px;
+    margin-bottom: 32px;
+  }
+
+  .feedback-form {
+    display: grid;
+    gap: 14px;
+    max-width: 560px;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .field label {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .field input,
+  .field textarea,
+  .field select {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.2s, box-shadow 0.3s var(--ease-out);
+  }
+  .field input:focus,
+  .field textarea:focus,
+  .field select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(233, 69, 96, 0.10);
+  }
+
+  .field textarea { resize: vertical; min-height: 120px; }
+
+  .feedback-form .btn { justify-self: start; padding: 12px 24px; }
+
+  .feedback-alt {
+    margin-top: 24px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .feedback-alt a { color: var(--accent); text-decoration: none; }
+  .feedback-alt a:hover { text-decoration: underline; }
+
+  #about p {
+    color: var(--muted);
+    max-width: 640px;
+    font-size: 15px;
+  }
+  #about p + p { margin-top: 12px; }
+
+  footer {
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  footer a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  footer a:hover { color: var(--text); }
+  footer .foot-links {
+    display: flex; gap: 18px;
+    justify-content: center; flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+
+  @media (max-width: 700px) {
+    .featured-app { grid-template-columns: 1fr; }
+    .featured-image { min-height: 200px; }
+    .featured-content { padding: 28px; }
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 60px 0 40px; }
+    header h1 { font-size: 32px; }
+    .apps { grid-template-columns: 1fr; }
+    .hero-btns { flex-direction: column; align-items: center; }
+    .hero-btns .btn { width: 100%; max-width: 280px; }
+    #feedback h2 { font-size: 22px; }
+    .orb { filter: blur(60px); }
+  }
+
+  @media (max-width: 520px) {
+    .nav-links { gap: 14px; }
+    .nav-links a { font-size: 13px; }
+    .nav-logo img { width: 24px; height: 24px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+    header h1, header p, .hero-btns { opacity: 1; transform: none; }
+    header h1 { clip-path: none; animation: none; }
+    header h1 span { animation: none; }
+    .hero-beam, .hero-glow { display: none; }
+    .reveal { opacity: 1; transform: none; }
+    .reveal-stagger > * { opacity: 1; transform: none; }
+    .orb-field, .cursor-glow { display: none; }
+  }
+</style>
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <nav id="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo">
+        <img src="Assets/images/logo.png" alt="Barkhad logo">
+        <span>Barkhad<span>.</span></span>
+      </a>
+      <div class="nav-links">
+        <a href="#apps" data-nav="apps">Apps</a>
+        <a href="#about" data-nav="about">About</a>
+        <a href="#feedback" data-nav="feedback">Feedback</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+
+    <header>
+      <div class="orb-field" aria-hidden="true">
+        <span class="orb"></span>
+        <span class="orb"></span>
+        <span class="orb"></span>
+        <span class="orb"></span>
+        <span class="orb"></span>
+        <span class="orb"></span>
+        <span class="orb"></span>
+      </div>
+
+      <div class="container">
+        <div class="hero-title-wrap">
+          <span class="hero-glow" aria-hidden="true"></span>
+          <span class="hero-beam" aria-hidden="true"></span>
+          <h1>Barkhad<span>.</span></h1>
+        </div>
+        <p>Free apps and tools — built for everyday use. No ads, no nonsense.</p>
+        <div class="hero-btns">
+          <a href="#apps" class="btn">Browse Apps</a>
+          <a href="#feedback" class="btn btn-outline">Send Feedback</a>
+        </div>
+      </div>
+    </header>
+
+    <section id="apps">
+      <div class="container">
+        <h2 class="section-title reveal">Apps &amp; Downloads</h2>
+
+        <div class="featured-app reveal" data-tilt>
+          <div class="featured-image">
+            <span class="img-fallback" aria-hidden="true">Sharci screenshot</span>
+            <img src="Assets/images/sharci1.png"
+                 alt="Screenshot of the Sharci drawing app"
+                 width="800" height="600"
+                 onerror="this.remove()">
+          </div>
+          <div class="featured-content">
+            <span class="featured-badge">Featured</span>
+            <h2>Sharci</h2>
+            <p>A simple, fast drawing app. Sketch, doodle, and export your work.</p>
+            <a href="Assets/apks/sharci.apk" class="btn" download>Download for Android</a>
+          </div>
+        </div>
+
+        <div class="apps reveal-stagger">
+
+          <article class="app-card" style="--i:0">
+            <div class="app-image">
+              <span class="img-fallback" aria-hidden="true">CCTV Viewer</span>
+              <img src="Assets/images/cctv-viewer.png"
+                   alt="CCTV Viewer app preview"
+                   width="800" height="500" loading="lazy" decoding="async"
+                   onerror="this.remove()">
+            </div>
+            <div class="app-content">
+              <h3>CCTV Viewer</h3>
+              <p>Watch your CCTV / IP cameras from your phone. RTSP, ONVIF auto-discovery, remote streams — one app.</p>
+              <div class="app-meta">
+                <span>v0.1.0</span>
+                <span>79 MB</span>
+                <span>Android</span>
+              </div>
+              <div class="btn-row">
+                <a href="Assets/apks/cctv-viewer-0.1.0.apk"
+                   class="btn" download>Download for Android</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="app-card" style="--i:1">
+            <div class="app-image">
               <span class="img-fallback" aria-hidden="true">Video Cutter</span>
             </div>
             <div class="app-content">
@@ -759,7 +1447,7 @@
             </div>
           </article>
 
-          <article class="app-card" style="--i:1">
+          <article class="app-card" style="--i:2">
             <div class="app-image">
               <span class="img-fallback" aria-hidden="true">TV Player</span>
               <img src="Assets/images/TV.png"
@@ -780,7 +1468,7 @@
             </div>
           </article>
 
-          <article class="app-card" style="--i:2">
+          <article class="app-card" style="--i:3">
             <div class="app-image">
               <span class="img-fallback" aria-hidden="true">Gabay</span>
               <img src="Assets/images/gabay.png"
@@ -810,7 +1498,6 @@
       </div>
     </section>
 
-    <!-- ─── 3. About ─── -->
     <section id="about">
       <div class="container">
         <h2 class="section-title reveal">About</h2>
@@ -821,7 +1508,6 @@
       </div>
     </section>
 
-    <!-- ─── 4. Feedback ─── -->
     <section id="feedback">
       <div class="container">
         <h2 class="section-title reveal">Feedback</h2>
@@ -848,6 +1534,7 @@
             <select id="fb-app" name="app">
               <option value="general">General / the site</option>
               <option value="sharci">Sharci</option>
+              <option value="cctv-viewer">CCTV Viewer</option>
               <option value="video-cutter">Video Cutter</option>
               <option value="tv-player">TV Player</option>
               <option value="gabay">Gabay</option>
@@ -872,7 +1559,6 @@
 
   </main>
 
-  <!-- ─── Footer ─── -->
   <footer>
     <div class="container">
       <div class="foot-links">
@@ -889,7 +1575,6 @@
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
-      /* ── 1. Cursor glow ────────────────────────────────── */
       if (!reduced && !isTouch) {
         const glow = document.querySelector('.cursor-glow');
         let x = window.innerWidth / 2, y = window.innerHeight / 2;
@@ -909,7 +1594,6 @@
         })();
       }
 
-      /* ── 2. Scroll reveal ──────────────────────────────── */
       const revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
       if ('IntersectionObserver' in window && !reduced) {
         const io = new IntersectionObserver((entries) => {
@@ -926,7 +1610,6 @@
         revealEls.forEach((el) => el.classList.add('is-visible'));
       }
 
-      /* ── 3. Nav active section ─────────────────────────── */
       const nav = document.getElementById('nav');
       const navLinks = document.querySelectorAll('.nav-links a[data-nav]');
       const sections = ['apps', 'about', 'feedback']
@@ -947,7 +1630,6 @@
         sections.forEach((s) => navIo.observe(s));
       }
 
-      /* ── 4. Nav background on scroll ───────────────────── */
       let ticking = false;
       window.addEventListener('scroll', () => {
         if (ticking) return;
@@ -958,7 +1640,253 @@
         });
       }, { passive: true });
 
-      /* ── 5. Featured image parallax ────────────────────── */
+      if (!reduced && !isTouch) {
+        document.querySelectorAll('[data-tilt]').forEach((card) => {
+          const img = card.querySelector('.featured-image img');
+          if (!img) return;
+          card.addEventListener('mousemove', (e) => {
+            const r = card.getBoundingClientRect();
+            const px = (e.clientX - r.left) / r.width - 0.5;
+            const py = (e.clientY - r.top) / r.height - 0.5;
+            img.style.transform =
+              `scale(1.08) translate(${px * -12}px, ${py * -12}px)`;
+          });
+          card.addEventListener('mouseleave', () => {
+            img.style.transform = '';
+          });
+        });
+      }
+    })();
+
+    (function () {
+      const isIOS =
+        /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      if (!isIOS) return;
+      document.querySelectorAll('[data-android]').forEach(el => el.hidden = true);
+      document.querySelectorAll('[data-ios]').forEach(el => el.hidden = false);
+    })();
+  </script>
+
+</body>
+</html>"
+                   class="btn" download>Download for Android</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="app-card" style="--i:1">
+            <div class="app-image">
+              <span class="img-fallback" aria-hidden="true">Video Cutter</span>
+            </div>
+            <div class="app-content">
+              <h3>Video Cutter</h3>
+              <p>Trim and edit videos for TikTok, YouTube, or status stories.</p>
+              <div class="app-meta">
+                <span>v1.0.0</span>
+                <span>8 MB</span>
+                <span>Android</span>
+              </div>
+              <div class="btn-row">
+                <a href="https://github.com/BCAprogrammer/bcaprogrammer.github.io/releases/download/vid/app-x86_64-release.apk"
+                   class="btn" rel="noopener">Download for Android</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="app-card" style="--i:2">
+            <div class="app-image">
+              <span class="img-fallback" aria-hidden="true">TV Player</span>
+              <img src="Assets/images/TV.png"
+                   alt="TV Player preview"
+                   width="800" height="500" loading="lazy" decoding="async"
+                   onerror="this.remove()">
+            </div>
+            <div class="app-content">
+              <h3>TV Player</h3>
+              <p>Stream live TV channels right in your browser — nothing to install.</p>
+              <div class="app-meta">
+                <span>v1.0.0</span>
+                <span>Web app</span>
+              </div>
+              <div class="btn-row">
+                <a href="/tv/" class="btn">Open Web Player</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="app-card" style="--i:3">
+            <div class="app-image">
+              <span class="img-fallback" aria-hidden="true">Gabay</span>
+              <img src="Assets/images/gabay.png"
+                   alt="Gabay poetry app preview"
+                   width="800" height="500" loading="lazy" decoding="async"
+                   onerror="this.remove()">
+            </div>
+            <div class="app-content">
+              <h3>Gabay</h3>
+              <p>A home for Somali poetry — read, write, and share classic and modern gabay.</p>
+              <div class="app-meta">
+                <span>v1.0.0</span>
+                <span>Free</span>
+                <span>Android</span>
+                <span>Web</span>
+              </div>
+              <div class="btn-row">
+                <a href="Assets/apks/gabay.apk"
+                   class="btn" download data-android>Download for Android</a>
+                <a href="/gabay/"
+                   class="btn" data-ios hidden>Open Web App</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title reveal">About</h2>
+        <div class="reveal" style="transition-delay:.1s">
+          <p>This is a personal collection of free apps and tools made by Barkhad.</p>
+          <p>Everything here is free to use, with no ads and no tracking.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="feedback">
+      <div class="container">
+        <h2 class="section-title reveal">Feedback</h2>
+        <h2 class="reveal" style="transition-delay:.1s">Tell me what you think</h2>
+        <p class="lead reveal" style="transition-delay:.2s">
+          Found a bug? Have an idea? Want a feature? Drop it below — every message gets read.
+        </p>
+
+        <form class="feedback-form reveal" style="transition-delay:.3s"
+              action="https://formspree.io/f/YOUR_FORM_ID"
+              method="POST">
+          <div class="field">
+            <label for="fb-name">Name (optional)</label>
+            <input type="text" id="fb-name" name="name" placeholder="Your name" autocomplete="name">
+          </div>
+
+          <div class="field">
+            <label for="fb-email">Email (optional — only if you want a reply)</label>
+            <input type="email" id="fb-email" name="email" placeholder="you@example.com" autocomplete="email">
+          </div>
+
+          <div class="field">
+            <label for="fb-app">Which app is this about?</label>
+            <select id="fb-app" name="app">
+              <option value="general">General / the site</option>
+              <option value="sharci">Sharci</option>
+              <option value="cctv-viewer">CCTV Viewer</option>
+              <option value="video-cutter">Video Cutter</option>
+              <option value="tv-player">TV Player</option>
+              <option value="gabay">Gabay</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="fb-message">Your message</label>
+            <textarea id="fb-message" name="message"
+                      placeholder="What's on your mind?" required></textarea>
+          </div>
+
+          <button type="submit" class="btn">Send Feedback</button>
+        </form>
+
+        <p class="feedback-alt reveal" style="transition-delay:.4s">
+          Prefer email? Write to
+          <a href="mailto:contact@barkhad.top">contact@barkhad.top</a>.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="foot-links">
+        <a href="#apps">Apps</a>
+        <a href="#about">About</a>
+        <a href="#feedback">Feedback</a>
+      </div>
+      <p>© 2026 Barkhad. All apps are free, forever.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
+      if (!reduced && !isTouch) {
+        const glow = document.querySelector('.cursor-glow');
+        let x = window.innerWidth / 2, y = window.innerHeight / 2;
+        let tx = x, ty = y;
+
+        window.addEventListener('mousemove', (e) => {
+          tx = e.clientX; ty = e.clientY;
+          glow.classList.add('on');
+        });
+        window.addEventListener('mouseleave', () => glow.classList.remove('on'));
+
+        (function raf() {
+          x += (tx - x) * 0.12;
+          y += (ty - y) * 0.12;
+          glow.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+          requestAnimationFrame(raf);
+        })();
+      }
+
+      const revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+      if ('IntersectionObserver' in window && !reduced) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+        revealEls.forEach((el) => io.observe(el));
+      } else {
+        revealEls.forEach((el) => el.classList.add('is-visible'));
+      }
+
+      const nav = document.getElementById('nav');
+      const navLinks = document.querySelectorAll('.nav-links a[data-nav]');
+      const sections = ['apps', 'about', 'feedback']
+        .map((id) => document.getElementById(id))
+        .filter(Boolean);
+
+      if ('IntersectionObserver' in window && sections.length) {
+        const navIo = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const id = entry.target.id;
+            navLinks.forEach((a) => {
+              a.classList.toggle('active', a.dataset.nav === id);
+            });
+          });
+        }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+
+        sections.forEach((s) => navIo.observe(s));
+      }
+
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          nav.classList.toggle('scrolled', window.scrollY > 20);
+          ticking = false;
+        });
+      }, { passive: true });
+
       if (!reduced && !isTouch) {
         document.querySelectorAll('[data-tilt]').forEach((card) => {
           const img = card.querySelector('.featured-image img');
