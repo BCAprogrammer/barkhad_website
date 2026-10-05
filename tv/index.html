@@ -159,6 +159,25 @@
       pointer-events: none;
     }
 
+    /* ---------- Toggle ---------- */
+    .toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 13px;
+      color: var(--muted);
+      cursor: pointer;
+      user-select: none;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+    .toggle input { accent-color: var(--accent); cursor: pointer; }
+    .toggle:hover { color: var(--text); }
+
     /* ---------- Layout ---------- */
     .layout {
       max-width: 1400px;
@@ -367,6 +386,19 @@
     .ch-fav:hover { opacity: 1; }
     .ch-fav.on { color: #ffc107; opacity: 1; }
 
+    /* Stream health indicator */
+    .stream-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .stream-dot.ok { background: #4caf50; }
+    .stream-dot.dead { background: #f44336; }
+    .stream-dot.checking { background: #ff9800; animation: pulse 1.2s infinite; }
+
     /* ---------- States ---------- */
     .empty {
       text-align: center;
@@ -483,6 +515,10 @@
   <div class="search">
     <input type="text" id="search" placeholder="Search channels, movies, series…">
   </div>
+  <label class="toggle">
+    <input type="checkbox" id="hide-offline">
+    Hide dead links
+  </label>
 </div>
 
 <div class="layout">
@@ -573,6 +609,71 @@ let favs = new Set(JSON.parse(localStorage.getItem('favs') || '[]'));
 
 const video = document.getElementById('video');
 const placeholder = document.getElementById('placeholder');
+
+// ============ STREAM HEALTH CHECKER ============
+const streamStatus = new Map(); // url -> 'ok' | 'dead' | 'checking'
+let hideOffline = localStorage.getItem('hideOffline') === 'true';
+
+async function checkStream(url) {
+  if (!url) return 'dead';
+  if (!/^https?:\/\//i.test(url)) return 'ok';
+  if (streamStatus.has(url)) return streamStatus.get(url);
+
+  streamStatus.set(url, 'checking');
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 7000);
+
+    // GET with no-cors: if the server responds AT ALL (even opaque), it's alive.
+    // If the IP is dead, connection refused, or timeout → it throws → dead.
+    await fetch(url, {
+      method: 'GET',
+      mode: 'no-cors',
+      signal: controller.signal,
+      cache: 'no-store'
+    });
+
+    clearTimeout(timer);
+    streamStatus.set(url, 'ok');
+    return 'ok';
+  } catch (e) {
+    streamStatus.set(url, 'dead');
+    return 'dead';
+  }
+}
+
+// Background checker — runs in small batches so we don't hammer the network
+async function verifyAllStreams() {
+  const total = channels.length;
+  let done = 0;
+  const BATCH = 6;
+
+  for (let i = 0; i < channels.length; i += BATCH) {
+    const slice = channels.slice(i, i + BATCH);
+    await Promise.all(slice.map(ch => checkStream(ch.url)));
+    done += slice.length;
+
+    // Live UI update every batch
+    updateCounts();
+    applyFilter();
+    setStatus(`Verified ${done}/${total}…`, 'loading');
+
+    // Save results so we don't re-check every visit
+    try {
+      localStorage.setItem('streamStatus', JSON.stringify([...streamStatus]));
+    } catch (e) {}
+  }
+
+  setStatus(`${channels.length} items · verified`, '');
+}
+
+// Load cached results from previous visit so dead links stay hidden
+function loadCachedStatus() {
+  try {
+    const cached = JSON.parse(localStorage.getItem('streamStatus') || '[]');
+    for (const [url, status] of cached) streamStatus.set(url, status);
+  } catch (e) {}
+}
 
 // ============ CATEGORIZATION ============
 function categorize(ch) {
@@ -680,6 +781,13 @@ function updateCounts() {
 function applyFilter() {
   filtered = channels.filter(ch => {
     if (currentTab !== 'all' && ch.type !== currentTab) return false;
+
+    // Hide dead streams if the toggle is on
+    if (hideOffline) {
+      const status = streamStatus.get(ch.url);
+      if (status === 'dead') return false;
+    }
+
     if (query) {
       const q = query.toLowerCase();
       if (!ch.name.toLowerCase().includes(q) &&
@@ -689,7 +797,8 @@ function applyFilter() {
   });
 
   renderList();
-  document.getElementById('list-count').textContent = `${filtered.length} item${filtered.length === 1 ? '' : 's'}`;
+  document.getElementById('list-count').textContent =
+    `${filtered.length} item${filtered.length === 1 ? '' : 's'}`;
   const titles = { all: 'All', live: 'Live TV', movies: 'Movies', series: 'Series', animation: 'Animation' };
   document.getElementById('list-title').textContent = titles[currentTab];
 }
@@ -710,6 +819,10 @@ function renderList() {
     const isFav = favs.has(ch.id || ch.url);
     const active = i === currentIndex;
     const initial = ch.name.charAt(0).toUpperCase();
+    const status = streamStatus.get(ch.url) || 'unknown';
+    const dotClass = status === 'ok' ? 'ok' : status === 'dead' ? 'dead' : status === 'checking' ? 'checking' : '';
+    const dot = status !== 'unknown' ? `<span class="stream-dot ${dotClass}" title="${status}"></span>` : '';
+
     return `
       <div class="channel ${active ? 'active' : ''}" data-index="${i}">
         <div class="ch-num">${i + 1}</div>
@@ -717,7 +830,7 @@ function renderList() {
           ${ch.logo ? `<img src="${escapeAttr(ch.logo)}" onerror="this.style.display='none'; this.parentElement.textContent='${escapeAttr(initial)}'">` : initial}
         </div>
         <div class="ch-info">
-          <div class="ch-name">${escapeHtml(ch.name)}</div>
+          <div class="ch-name">${escapeHtml(ch.name)} ${dot}</div>
           <div class="ch-group">${escapeHtml(ch.group)}</div>
         </div>
         <button class="ch-fav ${isFav ? 'on' : ''}" data-fav="${escapeAttr(ch.id || ch.url)}" title="Favorite">★</button>
@@ -780,7 +893,11 @@ function play(i) {
       hls.attachMedia(video);
       hls.on(Hls.Events.MANIFEST_PARSED, () => video.play().catch(()=>{}));
       hls.on(Hls.Events.ERROR, (_, data) => {
-        if (data.fatal) toast('Stream error: ' + data.type, 'error');
+        if (data.fatal) {
+          toast('Stream error: ' + data.type, 'error');
+          streamStatus.set(ch.url, 'dead');
+          renderList();
+        }
       });
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
       video.src = src;
@@ -924,6 +1041,12 @@ document.getElementById('next').addEventListener('click', next);
 document.getElementById('download').addEventListener('click', download);
 document.getElementById('dl-cancel').addEventListener('click', cancelDownload);
 
+document.getElementById('hide-offline').addEventListener('change', (e) => {
+  hideOffline = e.target.checked;
+  localStorage.setItem('hideOffline', hideOffline);
+  applyFilter();
+});
+
 document.getElementById('quality').addEventListener('change', (e) => {
   const q = e.target.value;
   if (!hls || q === 'auto') {
@@ -944,7 +1067,13 @@ document.addEventListener('keydown', (e) => {
 });
 
 // ============ START ============
-loadAll();
+// Restore the toggle state before the UI reads it
+document.getElementById('hide-offline').checked = hideOffline;
+
+loadCachedStatus();  // restore saved dead/ok statuses
+loadAll().then(() => {
+  verifyAllStreams();  // start background verification
+});
 </script>
 </body>
 </html>
