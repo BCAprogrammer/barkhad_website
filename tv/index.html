@@ -105,6 +105,7 @@
       padding: 4px;
       border-radius: 10px;
       border: 1px solid var(--border);
+      flex-wrap: wrap;
     }
     .tab {
       background: transparent;
@@ -177,6 +178,42 @@
     }
     .toggle input { accent-color: var(--accent); cursor: pointer; }
     .toggle:hover { color: var(--text); }
+
+    /* ---------- Profiles ---------- */
+    .profiles {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 4px;
+    }
+    .profiles select {
+      background: transparent;
+      border: none;
+      color: var(--text);
+      padding: 8px 10px;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      outline: none;
+      max-width: 140px;
+      text-overflow: ellipsis;
+    }
+    .profiles select option { background: var(--surface); color: var(--text); }
+    .profiles .icon-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 16px;
+      padding: 6px 10px;
+      border-radius: 7px;
+      transition: all 0.15s;
+      line-height: 1;
+    }
+    .profiles .icon-btn:hover { color: var(--text); background: var(--card); }
 
     /* ---------- Layout ---------- */
     .layout {
@@ -440,6 +477,51 @@
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     .toast.error { border-color: var(--error); color: var(--error); }
 
+    /* ---------- Modal ---------- */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1001;
+      padding: 20px;
+    }
+    .modal-backdrop.visible { display: flex; }
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+    .modal h3 {
+      font-size: 16px;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    .modal input {
+      width: 100%;
+      padding: 10px 14px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 14px;
+      outline: none;
+      font-family: inherit;
+      margin-bottom: 16px;
+    }
+    .modal input:focus { border-color: var(--accent); }
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
     /* ---------- Download bar ---------- */
     .download-bar {
       position: fixed;
@@ -507,6 +589,7 @@
 <div class="toolbar">
   <div class="tabs" id="tabs">
     <button class="tab active" data-tab="all">All <span class="tab-count" id="count-all">0</span></button>
+    <button class="tab" data-tab="favorites">⭐ Favorites <span class="tab-count" id="count-favorites">0</span></button>
     <button class="tab" data-tab="live">Live TV <span class="tab-count" id="count-live">0</span></button>
     <button class="tab" data-tab="movies">Movies <span class="tab-count" id="count-movies">0</span></button>
     <button class="tab" data-tab="series">Series <span class="tab-count" id="count-series">0</span></button>
@@ -519,6 +602,11 @@
     <input type="checkbox" id="hide-offline">
     Hide dead links
   </label>
+  <div class="profiles">
+    <select id="profile-select" title="Switch profile"></select>
+    <button class="icon-btn" id="profile-new" title="New profile">＋</button>
+    <button class="icon-btn" id="profile-delete" title="Delete current profile">🗑</button>
+  </div>
 </div>
 
 <div class="layout">
@@ -568,6 +656,18 @@
   </aside>
 </div>
 
+<!-- New profile modal -->
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal">
+    <h3>New profile</h3>
+    <input type="text" id="modal-input" placeholder="Profile name" maxlength="24">
+    <div class="modal-actions">
+      <button class="btn" id="modal-cancel">Cancel</button>
+      <button class="btn primary" id="modal-create">Create</button>
+    </div>
+  </div>
+</div>
+
 <div class="download-bar" id="download-bar">
   <div class="bar-header">
     <span class="bar-title" id="dl-title">Downloading…</span>
@@ -581,37 +681,116 @@
 
 <script>
 // ============ CONFIG ============
-// Add more playlist URLs here. Live and VOD can live in the same file
-// or in separate files — the app auto-detects based on group-title.
 const PLAYLISTS = [
-  // Your custom playlist: served from this repo, remote copy only as fallback
   { url: 'playlist.m3u', fallback: 'https://raw.githubusercontent.com/bcaprogrammer/tv/main/playlist.m3u' },
-
-  // iptv-org public categories
   'https://iptv-org.github.io/iptv/categories/movies.m3u',
   'https://iptv-org.github.io/iptv/categories/series.m3u',
   'https://iptv-org.github.io/iptv/categories/animation.m3u',
-
-  // Regional (uncomment what you want)
   'https://iptv-org.github.io/iptv/countries/so.m3u',
 ];
 
 // ============ STATE ============
-let channels = [];          // all channels from all playlists
-let filtered = [];          // currently visible list
-let currentIndex = -1;      // index into `filtered`
+let channels = [];
+let filtered = [];
+let currentIndex = -1;
 let currentTab = 'all';
 let query = '';
 let hls = null;
 let mediaRecorder = null;
 let recordChunks = [];
-let favs = new Set(JSON.parse(localStorage.getItem('favs') || '[]'));
+
+// Profiles
+let profiles = [];           // [{ id, name, favs: [keys] }]
+let currentProfileId = '';   // which profile is active
+let favs = new Set();        // favs of current profile (live set)
 
 const video = document.getElementById('video');
 const placeholder = document.getElementById('placeholder');
 
+// ============ PROFILE SYSTEM ============
+function uid() {
+  return 'p_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+}
+
+function loadProfiles() {
+  try {
+    const raw = localStorage.getItem('profiles');
+    if (raw) profiles = JSON.parse(raw);
+  } catch (e) { profiles = []; }
+
+  if (!Array.isArray(profiles) || profiles.length === 0) {
+    profiles = [{ id: uid(), name: 'Default', favs: [] }];
+  }
+
+  currentProfileId = localStorage.getItem('currentProfileId') || '';
+  if (!profiles.find(p => p.id === currentProfileId)) {
+    currentProfileId = profiles[0].id;
+    localStorage.setItem('currentProfileId', currentProfileId);
+  }
+
+  // Load this profile's favorites into the live set
+  const cur = profiles.find(p => p.id === currentProfileId);
+  favs = new Set(cur ? (cur.favs || []) : []);
+}
+
+function saveProfiles() {
+  // Write live favs back into the current profile before saving
+  const cur = profiles.find(p => p.id === currentProfileId);
+  if (cur) cur.favs = [...favs];
+  localStorage.setItem('profiles', JSON.stringify(profiles));
+  localStorage.setItem('currentProfileId', currentProfileId);
+}
+
+function switchProfile(id) {
+  if (!profiles.find(p => p.id === id)) return;
+  saveProfiles();                        // save current profile first
+  currentProfileId = id;
+  const cur = profiles.find(p => p.id === id);
+  favs = new Set(cur.favs || []);
+  localStorage.setItem('currentProfileId', currentProfileId);
+  renderProfileSelect();
+  updateCounts();
+  applyFilter();
+  toast(`Switched to "${cur.name}"`);
+}
+
+function createProfile(name) {
+  name = (name || '').trim() || `Profile ${profiles.length + 1}`;
+  const p = { id: uid(), name, favs: [] };
+  profiles.push(p);
+  saveProfiles();
+  switchProfile(p.id);
+}
+
+function deleteProfile(id) {
+  if (profiles.length <= 1) {
+    toast('Cannot delete the last profile', 'error');
+    return;
+  }
+  const p = profiles.find(x => x.id === id);
+  if (!p) return;
+  if (!confirm(`Delete profile "${p.name}"? Its favorites will be lost.`)) return;
+  profiles = profiles.filter(x => x.id !== id);
+  if (currentProfileId === id) {
+    currentProfileId = profiles[0].id;
+    favs = new Set(profiles[0].favs || []);
+  }
+  saveProfiles();
+  renderProfileSelect();
+  updateCounts();
+  applyFilter();
+  toast(`Deleted "${p.name}"`);
+}
+
+function renderProfileSelect() {
+  const sel = document.getElementById('profile-select');
+  sel.innerHTML = profiles.map(p =>
+    `<option value="${escapeAttr(p.id)}" ${p.id === currentProfileId ? 'selected' : ''}>${escapeHtml(p.name)}</option>`
+  ).join('');
+}
+
 // ============ STREAM HEALTH CHECKER ============
-const streamStatus = new Map(); // url -> 'ok' | 'dead' | 'checking'
+const streamStatus = new Map();
 let hideOffline = localStorage.getItem('hideOffline') === 'true';
 
 async function checkStream(url) {
@@ -623,16 +802,12 @@ async function checkStream(url) {
   try {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 7000);
-
-    // GET with no-cors: if the server responds AT ALL (even opaque), it's alive.
-    // If the IP is dead, connection refused, or timeout → it throws → dead.
     await fetch(url, {
       method: 'GET',
       mode: 'no-cors',
       signal: controller.signal,
       cache: 'no-store'
     });
-
     clearTimeout(timer);
     streamStatus.set(url, 'ok');
     return 'ok';
@@ -642,7 +817,6 @@ async function checkStream(url) {
   }
 }
 
-// Background checker — runs in small batches so we don't hammer the network
 async function verifyAllStreams() {
   const total = channels.length;
   let done = 0;
@@ -652,22 +826,16 @@ async function verifyAllStreams() {
     const slice = channels.slice(i, i + BATCH);
     await Promise.all(slice.map(ch => checkStream(ch.url)));
     done += slice.length;
-
-    // Live UI update every batch
     updateCounts();
     applyFilter();
     setStatus(`Verified ${done}/${total}…`, 'loading');
-
-    // Save results so we don't re-check every visit
     try {
       localStorage.setItem('streamStatus', JSON.stringify([...streamStatus]));
     } catch (e) {}
   }
-
   setStatus(`${channels.length} items · verified`, '');
 }
 
-// Load cached results from previous visit so dead links stay hidden
 function loadCachedStatus() {
   try {
     const cached = JSON.parse(localStorage.getItem('streamStatus') || '[]');
@@ -724,30 +892,29 @@ async function loadAll() {
   let failed = 0;
 
   for (const entry of PLAYLISTS) {
-      const url = typeof entry === 'string' ? entry : entry.url;
-      const fallback = typeof entry === 'string' ? null : entry.fallback;
-      try {
-        // Fallback is only fetched when the primary source fails
-        const targets = fallback ? [url, fallback] : [url];
-        let loaded = null;
-        let lastErr = null;
-        for (const t of targets) {
-          try {
-            const r = await fetch(t, { cache: 'no-store' });
-            if (!r.ok) throw new Error(`HTTP ${r.status}`);
-            loaded = parseM3U(await r.text());
-            break;
-          } catch (e) {
-            lastErr = e;
-            console.error('Playlist failed:', t, e);
-          }
+    const url = typeof entry === 'string' ? entry : entry.url;
+    const fallback = typeof entry === 'string' ? null : entry.fallback;
+    try {
+      const targets = fallback ? [url, fallback] : [url];
+      let loaded = null;
+      let lastErr = null;
+      for (const t of targets) {
+        try {
+          const r = await fetch(t, { cache: 'no-store' });
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          loaded = parseM3U(await r.text());
+          break;
+        } catch (e) {
+          lastErr = e;
+          console.error('Playlist failed:', t, e);
         }
-        if (!loaded) throw lastErr;
-        all.push(...loaded);
-      } catch (e) {
-        failed++;
       }
+      if (!loaded) throw lastErr;
+      all.push(...loaded);
+    } catch (e) {
+      failed++;
     }
+  }
 
   channels = all;
   if (channels.length === 0) {
@@ -768,9 +935,10 @@ async function loadAll() {
 }
 
 function updateCounts() {
-  const c = { all: channels.length, live: 0, movies: 0, series: 0, animation: 0 };
+  const c = { all: channels.length, live: 0, movies: 0, series: 0, animation: 0, favorites: favs.size };
   for (const ch of channels) c[ch.type]++;
   document.getElementById('count-all').textContent    = c.all;
+  document.getElementById('count-favorites').textContent = c.favorites;
   document.getElementById('count-live').textContent   = c.live;
   document.getElementById('count-movies').textContent = c.movies;
   document.getElementById('count-series').textContent = c.series;
@@ -778,11 +946,19 @@ function updateCounts() {
 }
 
 // ============ FILTER + RENDER ============
+function channelKey(ch) { return ch.id || ch.url; }
+
 function applyFilter() {
   filtered = channels.filter(ch => {
-    if (currentTab !== 'all' && ch.type !== currentTab) return false;
+    const key = channelKey(ch);
 
-    // Hide dead streams if the toggle is on
+    // Favorites tab — only show starred channels
+    if (currentTab === 'favorites') {
+      if (!favs.has(key)) return false;
+    } else if (currentTab !== 'all' && ch.type !== currentTab) {
+      return false;
+    }
+
     if (hideOffline) {
       const status = streamStatus.get(ch.url);
       if (status === 'dead') return false;
@@ -799,24 +975,28 @@ function applyFilter() {
   renderList();
   document.getElementById('list-count').textContent =
     `${filtered.length} item${filtered.length === 1 ? '' : 's'}`;
-  const titles = { all: 'All', live: 'Live TV', movies: 'Movies', series: 'Series', animation: 'Animation' };
+  const titles = { all: 'All', favorites: '⭐ Favorites', live: 'Live TV', movies: 'Movies', series: 'Series', animation: 'Animation' };
   document.getElementById('list-title').textContent = titles[currentTab];
 }
 
 function renderList() {
   const list = document.getElementById('list');
   if (filtered.length === 0) {
+    const msg = currentTab === 'favorites'
+      ? { icon: '⭐', h: 'No favorites yet', p: 'Tap the ☆ on any channel to save it here.' }
+      : { icon: '🔍', h: 'Nothing here', p: 'Try a different category or search.' };
     list.innerHTML = `
       <div class="empty">
-        <div class="icon">🔍</div>
-        <h3>Nothing here</h3>
-        <p>Try a different category or search.</p>
+        <div class="icon">${msg.icon}</div>
+        <h3>${msg.h}</h3>
+        <p>${msg.p}</p>
       </div>`;
     return;
   }
 
   list.innerHTML = filtered.map((ch, i) => {
-    const isFav = favs.has(ch.id || ch.url);
+    const key = channelKey(ch);
+    const isFav = favs.has(key);
     const active = i === currentIndex;
     const initial = ch.name.charAt(0).toUpperCase();
     const status = streamStatus.get(ch.url) || 'unknown';
@@ -833,14 +1013,13 @@ function renderList() {
           <div class="ch-name">${escapeHtml(ch.name)} ${dot}</div>
           <div class="ch-group">${escapeHtml(ch.group)}</div>
         </div>
-        <button class="ch-fav ${isFav ? 'on' : ''}" data-fav="${escapeAttr(ch.id || ch.url)}" title="Favorite">★</button>
+        <button class="ch-fav ${isFav ? 'on' : ''}" data-fav="${escapeAttr(key)}" title="Favorite">${isFav ? '★' : '☆'}</button>
       </div>`;
   }).join('');
 
-  // Wire up clicks (single listener per item)
   list.querySelectorAll('.channel').forEach(el => {
     el.addEventListener('click', (e) => {
-      if (e.target.closest('.ch-fav')) return; // favorite button handles itself
+      if (e.target.closest('.ch-fav')) return;
       play(parseInt(el.dataset.index, 10));
     });
   });
@@ -855,8 +1034,9 @@ function renderList() {
 function toggleFav(key) {
   if (!key) return;
   if (favs.has(key)) favs.delete(key); else favs.add(key);
-  localStorage.setItem('favs', JSON.stringify([...favs]));
-  renderList();
+  saveProfiles();     // persist to current profile immediately
+  updateCounts();
+  applyFilter();
 }
 
 // ============ PLAYBACK ============
@@ -866,8 +1046,6 @@ function play(i) {
   if (!ch.url) return;
 
   currentIndex = i;
-
-  // Update UI
   renderList();
   const active = document.querySelector('.channel.active');
   if (active) active.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -932,7 +1110,6 @@ function download() {
   if (currentIndex < 0) return;
   const ch = filtered[currentIndex];
 
-  // Direct file → just trigger download
   if (/\.(mp4|mkv|webm|mov)($|\?)/i.test(ch.url)) {
     const a = document.createElement('a');
     a.href = ch.url;
@@ -944,7 +1121,6 @@ function download() {
     return;
   }
 
-  // HLS → record via MediaRecorder (browser dependent)
   if (typeof MediaRecorder === 'undefined' || !video.captureStream) {
     toast('Download not supported for this stream', 'error');
     return;
@@ -1047,6 +1223,44 @@ document.getElementById('hide-offline').addEventListener('change', (e) => {
   applyFilter();
 });
 
+// Profile events
+document.getElementById('profile-select').addEventListener('change', (e) => {
+  switchProfile(e.target.value);
+});
+
+const modal = document.getElementById('modal-backdrop');
+const modalInput = document.getElementById('modal-input');
+
+function openNewProfileModal() {
+  modalInput.value = '';
+  modal.classList.add('visible');
+  setTimeout(() => modalInput.focus(), 50);
+}
+function closeNewProfileModal() {
+  modal.classList.remove('visible');
+}
+
+document.getElementById('profile-new').addEventListener('click', openNewProfileModal);
+document.getElementById('modal-cancel').addEventListener('click', closeNewProfileModal);
+document.getElementById('modal-create').addEventListener('click', () => {
+  createProfile(modalInput.value);
+  closeNewProfileModal();
+});
+modalInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    createProfile(modalInput.value);
+    closeNewProfileModal();
+  }
+  if (e.key === 'Escape') closeNewProfileModal();
+});
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) closeNewProfileModal();
+});
+
+document.getElementById('profile-delete').addEventListener('click', () => {
+  deleteProfile(currentProfileId);
+});
+
 document.getElementById('quality').addEventListener('change', (e) => {
   const q = e.target.value;
   if (!hls || q === 'auto') {
@@ -1066,13 +1280,21 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); prev(); }
 });
 
+// Save favorites when the tab is closed or hidden
+window.addEventListener('beforeunload', saveProfiles);
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) saveProfiles();
+});
+
 // ============ START ============
-// Restore the toggle state before the UI reads it
 document.getElementById('hide-offline').checked = hideOffline;
 
-loadCachedStatus();  // restore saved dead/ok statuses
+loadProfiles();
+renderProfileSelect();
+loadCachedStatus();
 loadAll().then(() => {
-  verifyAllStreams();  // start background verification
+  updateCounts();
+  verifyAllStreams();
 });
 </script>
 </body>
