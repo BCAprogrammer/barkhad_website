@@ -478,6 +478,7 @@
     <button class="tab" data-tab="live">Live TV <span class="tab-count" id="count-live">0</span></button>
     <button class="tab" data-tab="movies">Movies <span class="tab-count" id="count-movies">0</span></button>
     <button class="tab" data-tab="series">Series <span class="tab-count" id="count-series">0</span></button>
+    <button class="tab" data-tab="animation">Animation <span class="tab-count" id="count-animation">0</span></button>
   </div>
   <div class="search">
     <input type="text" id="search" placeholder="Search channels, movies, series…">
@@ -579,6 +580,7 @@ function categorize(ch) {
   const n = (ch.name || '').toLowerCase();
   if (g.includes('movie') || g.includes('film') || g.includes('cinema') || n.includes(' (movie)')) return 'movies';
   if (g.includes('series') || g.includes('show') || g.includes('season') || n.includes(' s0') || n.includes(' s1')) return 'series';
+  if (g.includes('animation') || g.includes('anime') || g.includes('cartoon') || g.includes('kids')) return 'animation';
   return 'live';
 }
 
@@ -665,12 +667,13 @@ async function loadAll() {
 }
 
 function updateCounts() {
-  const c = { all: channels.length, live: 0, movies: 0, series: 0 };
+  const c = { all: channels.length, live: 0, movies: 0, series: 0, animation: 0 };
   for (const ch of channels) c[ch.type]++;
   document.getElementById('count-all').textContent    = c.all;
   document.getElementById('count-live').textContent   = c.live;
   document.getElementById('count-movies').textContent = c.movies;
   document.getElementById('count-series').textContent = c.series;
+  document.getElementById('count-animation').textContent = c.animation;
 }
 
 // ============ FILTER + RENDER ============
@@ -687,7 +690,7 @@ function applyFilter() {
 
   renderList();
   document.getElementById('list-count').textContent = `${filtered.length} item${filtered.length === 1 ? '' : 's'}`;
-  const titles = { all: 'All', live: 'Live TV', movies: 'Movies', series: 'Series' };
+  const titles = { all: 'All', live: 'Live TV', movies: 'Movies', series: 'Series', animation: 'Animation' };
   document.getElementById('list-title').textContent = titles[currentTab];
 }
 
