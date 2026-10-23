@@ -5,14 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Barkhad — Free Apps &amp; Tools for Everyday Use</title>
-<meta name="description" content="A small collection of free apps and tools built by Barkhad. No ads, no tracking, no nonsense — just useful software.">
+<meta name="description" content="Free apps, tools, and live TV built by Barkhad. No ads, no tracking, no nonsense.">
 <link rel="canonical" href="https://barkhad.top/">
 <meta name="theme-color" content="#0f1117">
+
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self';
+  style-src 'self';
+  img-src 'self' data:;
+  form-action https://formspree.io;
+  object-src 'none';
+  base-uri 'none';
+  upgrade-insecure-requests">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Barkhad">
 <meta property="og:title" content="Barkhad — Free Apps &amp; Tools">
-<meta property="og:description" content="Free apps and tools built for everyday use. No ads, no nonsense.">
+<meta property="og:description" content="Free apps, tools, and live TV built for everyday use. No ads, no nonsense.">
 <meta property="og:url" content="https://barkhad.top/">
 <meta property="og:image" content="https://barkhad.top/Assets/images/logo.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -25,7 +35,6 @@
 <body>
 
   <a class="skip-link" href="#main">Skip to content</a>
-
   <div class="cursor-glow" aria-hidden="true"></div>
 
   <nav id="nav">
@@ -36,7 +45,7 @@
       </a>
       <div class="nav-links">
         <a href="#tv" data-nav="tv">TV</a>
-        <a href="#apps" data-nav="apps">Apps</a>
+        <a href="/apps/">Apps</a>
         <a href="#about" data-nav="about">About</a>
         <a href="#feedback" data-nav="feedback">Feedback</a>
       </div>
@@ -62,10 +71,10 @@
           <span class="hero-beam" aria-hidden="true"></span>
           <h1>Barkhad<span>.</span></h1>
         </div>
-        <p>Free apps and tools — built for everyday use. No ads, no nonsense.</p>
+        <p>Free apps, tools, and live TV — built for everyday use. No ads, no nonsense.</p>
         <div class="hero-btns">
-          <a href="#apps" class="btn">Browse Apps</a>
-          <a href="#feedback" class="btn btn-outline">Send Feedback</a>
+          <a href="/apps/" class="btn">Browse Apps</a>
+          <a href="/tv/" class="btn btn-outline">Watch TV</a>
         </div>
       </div>
     </header>
@@ -93,106 +102,12 @@
       </div>
     </section>
 
-    <!-- ============ APPS ============ -->
-    <section id="apps">
-      <div class="container">
-        <h2 class="section-title reveal">Apps &amp; Downloads</h2>
-
-        <div class="featured-app reveal" data-tilt>
-          <div class="featured-image">
-            <span class="img-fallback" aria-hidden="true">Sharci screenshot</span>
-            <img src="Assets/images/sharci1.png"
-                 alt="Screenshot of the Sharci drawing app"
-                 width="800" height="600"
-                 data-fallback>
-          </div>
-          <div class="featured-content">
-            <span class="featured-badge">Featured</span>
-            <h3>Sharci</h3>
-            <p>A simple, fast drawing app. Sketch, doodle, and export your work.</p>
-            <a href="Assets/apks/sharci.apk" class="btn" download>Download for Android</a>
-          </div>
-        </div>
-
-        <div class="apps reveal-stagger">
-
-          <article class="app-card">
-            <div class="app-image">
-              <span class="img-fallback" aria-hidden="true">CCTV Viewer</span>
-              <img src="Assets/images/cctv-viewer.png"
-                   alt="CCTV Viewer app preview"
-                   width="800" height="500" loading="lazy" decoding="async"
-                   data-fallback>
-            </div>
-            <div class="app-content">
-              <h3>CCTV Viewer</h3>
-              <p>Watch your CCTV / IP cameras from your phone. RTSP, ONVIF auto-discovery, remote streams — one app.</p>
-              <div class="app-meta">
-                <span>v0.1.0</span>
-                <span>79 MB</span>
-                <span>Android</span>
-              </div>
-              <div class="btn-row">
-                <a href="https://github.com/BCAprogrammer/barkhad_website/releases/download/camera/camera.apk"
-                   class="btn" download rel="noopener">Download for Android</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="app-card">
-            <div class="app-image">
-              <span class="img-fallback" aria-hidden="true">Video Cutter</span>
-            </div>
-            <div class="app-content">
-              <h3>Video Cutter</h3>
-              <p>Trim and edit videos for TikTok, YouTube, or status stories.</p>
-              <div class="app-meta">
-                <span>v1.0.0</span>
-                <span>8 MB</span>
-                <span>Android</span>
-              </div>
-              <div class="btn-row">
-                <a href="https://github.com/BCAprogrammer/bcaprogrammer.github.io/releases/download/vid/app-x86_64-release.apk"
-                   class="btn" download rel="noopener">Download for Android</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="app-card">
-            <div class="app-image">
-              <span class="img-fallback" aria-hidden="true">Gabay</span>
-              <img src="Assets/images/gabay.png"
-                   alt="Gabay poetry app preview"
-                   width="800" height="500" loading="lazy" decoding="async"
-                   data-fallback>
-            </div>
-            <div class="app-content">
-              <h3>Gabay</h3>
-              <p>A home for Somali poetry — read, write, and share classic and modern gabay.</p>
-              <div class="app-meta">
-                <span>v1.0.0</span>
-                <span>Free</span>
-                <span>Android</span>
-                <span>Web</span>
-              </div>
-              <div class="btn-row">
-                <a href="https://github.com/BCAprogrammer/barkhad_website/releases/download/gabay_ccod/gabay_cod.apk"
-                   class="btn" download data-android rel="noopener">Download for Android</a>
-                <a href="/gabay/" class="btn" data-ios hidden>Open Web App</a>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
     <!-- ============ ABOUT ============ -->
     <section id="about">
       <div class="container">
         <h2 class="section-title reveal">About</h2>
         <div class="reveal delay-1">
-          <p>This is a personal collection of free apps and tools made by Barkhad.</p>
+          <p>This is a personal collection of free apps, tools, and live TV made by Barkhad.</p>
           <p>Everything here is free to use, with no ads and no tracking.</p>
         </div>
       </div>
@@ -259,7 +174,7 @@
     <div class="container">
       <div class="foot-links">
         <a href="#tv">TV</a>
-        <a href="#apps">Apps</a>
+        <a href="/apps/">Apps</a>
         <a href="#about">About</a>
         <a href="#feedback">Feedback</a>
       </div>

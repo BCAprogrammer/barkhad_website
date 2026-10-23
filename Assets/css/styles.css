@@ -741,6 +741,36 @@ header p {
    ========================================================================== */
 
 section { padding: 60px 0; position: relative; }
+/* Page header (subpages like /apps/) */
+.page-header {
+  padding: 64px 0 32px;
+  border-bottom: 1px solid var(--border);
+  background: radial-gradient(ellipse at 50% 0%, rgba(233, 69, 96, 0.06) 0%, transparent 70%);
+}
+.page-header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+.page-header .lead {
+  color: var(--muted);
+  font-size: 15px;
+  max-width: 540px;
+}
+.eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+@media (max-width: 600px) {
+  .page-header { padding: 40px 0 24px; }
+  .page-header h1 { font-size: 28px; }
+}
 
 /* About */
 #about p {
